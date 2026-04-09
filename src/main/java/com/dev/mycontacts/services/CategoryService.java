@@ -1,6 +1,7 @@
 package com.dev.mycontacts.services;
 
 import com.dev.mycontacts.dto.request.CreateCategoryDto;
+import com.dev.mycontacts.dto.request.UpdateCategoryDto;
 import com.dev.mycontacts.entities.Category;
 import com.dev.mycontacts.exceptions.CategoryNotFoundException;
 import com.dev.mycontacts.repositories.CategoryRepository;
@@ -39,15 +40,15 @@ public class CategoryService {
         this.categoryRepository.deleteById(id);
     }
 
-    public Category updateById(Long id, Category category) {
+    public Category updateById(Long id, UpdateCategoryDto updateCategoryDto) {
 
-        int rowsAffected = this.categoryRepository.update(id, category.getName());
+        Category category = this.categoryRepository.findById(id).orElseThrow(
+                () -> new CategoryNotFoundException("Categoria com id " + id + " não encontrada")
+        );
 
-        if(rowsAffected <= 0) {
-            throw new CategoryNotFoundException("Categoria com id " + id + " não encontrada");
-        }
+        category.setName(updateCategoryDto.getName());
 
-        return category;
+        return this.categoryRepository.save(category);
     }
 
 }

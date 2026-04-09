@@ -1,6 +1,7 @@
 package com.dev.mycontacts.controllers;
 
 import com.dev.mycontacts.dto.request.CreateCategoryDto;
+import com.dev.mycontacts.dto.request.UpdateCategoryDto;
 import com.dev.mycontacts.entities.Category;
 import com.dev.mycontacts.services.CategoryService;
 import jakarta.validation.Valid;
@@ -41,4 +42,10 @@ public class CategoryController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}")
+    public Category updateById(@Valid @PathVariable Long id, @RequestBody UpdateCategoryDto updateCategoryDto) {
+        return this.categoryService.updateById(id, updateCategoryDto);
+    }
+
 }
