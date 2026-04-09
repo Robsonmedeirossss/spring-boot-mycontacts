@@ -1,6 +1,7 @@
 package com.dev.mycontacts.controllers;
 
 import com.dev.mycontacts.dto.request.CreateContactDto;
+import com.dev.mycontacts.dto.request.UpdateContactDto;
 import com.dev.mycontacts.entities.Contact;
 import com.dev.mycontacts.services.ContactService;
 import jakarta.validation.Valid;
@@ -40,6 +41,11 @@ public class ContactController {
         this.contactService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}")
+    public Contact updateById(@Valid @PathVariable Long id, UpdateContactDto updateContactDto) {
+        return this.contactService.updateById(id, updateContactDto);
     }
 
 }

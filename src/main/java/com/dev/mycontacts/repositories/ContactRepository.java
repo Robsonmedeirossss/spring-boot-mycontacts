@@ -11,13 +11,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE Contact c SET c.name = :name, c.email = :email, c.phone = :phone, c.category = :category WHERE c.id = :id")
-    int update(@Param("id") Long id,
-               @Param("name") String name,
-               @Param("email") String email,
-               @Param("phone") String phone,
-               @Param("category")Category category);
 }
