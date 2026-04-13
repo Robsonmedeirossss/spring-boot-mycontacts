@@ -5,7 +5,6 @@ import com.dev.mycontacts.dto.request.UpdateCategoryDto;
 import com.dev.mycontacts.entities.Category;
 import com.dev.mycontacts.services.CategoryService;
 import jakarta.validation.Valid;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,10 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> findAll() {
-        return this.categoryService.findAll();
+    public List<Category> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "2") int size) {
+        return this.categoryService.findAll(page, size);
     }
 
     @GetMapping("/{id}")

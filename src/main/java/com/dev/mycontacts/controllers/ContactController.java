@@ -5,7 +5,6 @@ import com.dev.mycontacts.dto.request.UpdateContactDto;
 import com.dev.mycontacts.entities.Contact;
 import com.dev.mycontacts.services.ContactService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +21,11 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<Contact> findAll() {
-        return this.contactService.findAll();
+    public List<Contact> findAll(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "2") Integer size) {
+
+        return this.contactService.findAll(page, size);
     }
 
     @GetMapping("/{id}")

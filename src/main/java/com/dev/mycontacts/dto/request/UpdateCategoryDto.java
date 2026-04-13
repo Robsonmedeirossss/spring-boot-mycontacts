@@ -1,6 +1,5 @@
 package com.dev.mycontacts.dto.request;
 
-import com.dev.mycontacts.entities.Category;
 import jakarta.validation.constraints.NotBlank;
 
 public class UpdateCategoryDto {

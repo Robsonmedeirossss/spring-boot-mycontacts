@@ -7,7 +7,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -18,10 +17,9 @@ public class GlobalExceptionHandler {
         ResponseError responseError = new ResponseError(
                 HttpStatus.NOT_FOUND,
                 LocalDateTime.now(),
-                exception.getMessage()
-        );
+                exception.getMessage());
 
-        return  ResponseEntity.status(404).body(responseError);
+        return ResponseEntity.status(404).body(responseError);
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
@@ -31,8 +29,7 @@ public class GlobalExceptionHandler {
         ResponseError responseError = new ResponseError(
                 HttpStatus.NOT_FOUND,
                 LocalDateTime.now(),
-                exception.getMessage()
-                );
+                exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError);
     }
 
