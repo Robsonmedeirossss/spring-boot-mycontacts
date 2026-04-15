@@ -1,0 +1,47 @@
+services:
+  postgres_dev:
+    image: postgres:15
+    restart: unless-stopped
+    container_name: container_postgres_dev
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - internal-network
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    container_name: container_api_dev
+    restart: unless-stopped
+    build: .
+    depends_on:
+      - postgres_dev
+    networks:
+      - internal-network
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:latest
+    container_name: container_proxy_dev
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - internal-network
+
+volumes: 
+  postgres_data:
+
+networks:
+  internal-network:
+    driver: bridge
